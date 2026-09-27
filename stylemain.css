@@ -1,0 +1,80 @@
+/* 1. Сначала настраиваем весь экран сайта */
+body {
+    background-color: #141218; /* Твой фирменный тёмный фон из Figma */
+    color: #ffffff; /* Текст делаем белым, чтобы его было видно */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 40px; /* Отступ от краёв экрана, чтобы сайт дышал */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Стили для главного заголовка */
+h1 {
+    color: #ff8000; /* Фирменный оранжевый Папайя */
+    margin-bottom: 5px;
+}
+
+p {
+    color: #aaaaaa; /* Описание делаем мягким серым */
+    margin-bottom: 30px;
+}
+
+/* 2. Настраиваем общую обёртку для карточек */
+.container {
+    display: flex;
+    flex-direction: column; /* Карточки будут идти строго сверху вниз */
+    gap: 20px; /* Расстояние между карточками */
+    width: 600px; /* Фиксированная ширина списка, как в макете */
+}
+
+/* 3. Переносим те самые стили из Figma на правильный класс .column */
+.column {
+    display: flex;
+    flex-direction: column; /* Контент внутри карточки идёт сверху вниз */
+    align-items: flex-start;
+    gap: 12px; /* Расстояние между иконкой-заголовком, текстом и кнопкой */
+    
+    width: 100%; /* Занимает всю ширину контейнера (600px) */
+    padding: 24px; /* Внутренние отступы, чтобы текст не прилипал к краям */
+    background: rgba(255, 255, 255, 0.05); /* Красивый полупрозрачный тёмный фон карточки */
+    border-radius: 12px; /* Мягкие современные углы */
+    box-sizing: border-box; /* Чтобы отступы не ломали ширину */
+}
+
+/* Оформляем заголовки внутри карточек (h2) */
+.column h2 {
+    margin: 0;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Расстояние между иконкой и текстом */
+}
+
+/* Оформляем текст описания внутри карточек */
+.column p {
+    margin: 0;
+    font-size: 14px;
+    color: #888888;
+}
+
+/* 4. Настраиваем аккуратные оранжевые кнопки */
+.column button {
+    background-color: #ff8000; /* Оранжевый McLaren */
+    color: #1a1a1a;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out; /* Плавность для анимации */
+}
+
+/* Сочное неоновое свечение при наведении мышки! */
+.column button:hover {
+    background-color: #ff9933;
+    box-shadow: 0 0 15px #ff8000; /* Неоновый крутой шлейф */
+    transform: translateY(-1px); /* Интерактивный подскок */
+}
+
