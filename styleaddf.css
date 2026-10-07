@@ -1,106 +1,151 @@
-/* 1. Сначала настраиваем весь экран сайта */
 body {
-    background-color: #141218; /* Твой фирменный тёмный фон из Figma */
-    color: #ffffff; /* Текст делаем белым, чтобы его было видно */
-    font-family: Arial, sans-serif;
     margin: 0;
-    padding: 40px; /* Отступ от краёв экрана, чтобы сайт дышал */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0;
+    background-color: #000000; /* Глухой чёрный цвет подложкой */
+    color: #ffffff;
+    font-family: 'Press Start 2P', monospace;
 }
 
-/* Стили для главного заголовка */
+/* Создаем скрытый изолированный слой строго под фоновую картинку */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.45)
+        ),
+        url('bg-film.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: none;
+}
+
+/* Гарантируем, что все кнопки, инпуты и колонки стоят ПОВЕРХ фона чёткими */
+.container, .buttons-column, button, input {
+    position: relative;
+    z-index: 1; 
+}
 h1 {
-    color: #ff8000; /* Фирменный оранжевый Папайя */
+    text-align: center;
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Накатываем магию флексов на общий контейнер */
+.container {
+    display: flex !important; 
+    flex-direction: row !important; /* Выстраиваем внутренние блоки строго в строчку */
+    justify-content: center; /* Центруем обе колонки по центру экрана */
+    gap: 40px; /* Делаем красивый, ленивый отступ между колонками, чтобы они не липли */
+    margin-top: 50px; /* Отступаем сверху от главного логотипа */
+    width: 100%;
+}
+
+/* Настройки для самих колонок (чтобы они были ровными и аккуратными) */
+.column {
+    background: rgba(0, 0, 0, 0.7); /* Ленивый полупрозрачный чёрный фон, чтобы текст читался идеально поверх паутины */
+    border: 2px solid #ffffff; /* Белая пиксельная рамка в стиле хоррора */
+    padding: 20px;
+    min-width: 250px;
+    text-align: center;
+}
+button{
+    background: rgba(0, 0, 0, 0.7); /* Ленивый полупрозрачный чёрный фон, чтобы текст читался идеально поверх паутины */
+    border: 2px solid #ffffff; /* Белая пиксельная рамка в стиле хоррора */
+    padding: 20px;
+    min-width: 250px;
+    text-align: center; 
+    color:#ffffff;
+}
+.column button:hover {
+    cursor: pointer; 
+    transition: all 0.4s ease-in-out;
+    background-color: #373533;
+    box-shadow: 0 0 15px  #373533; /* Неоновый крутой шлейф */
+    transform: translateY(-1px); /* Интерактивный подскок */
+}
+input{
+    background: rgba(0, 0, 0, 0.7); /* Ленивый полупрозрачный чёрный фон, чтобы текст читался идеально поверх паутины */
+    border: 2px solid #ffffff; /* Белая пиксельная рамка в стиле хоррора */
+    padding: 20px;
+    min-width: 300px;
+    text-align: center; 
+    color:#ffffff;
+}
+#list1 {
+    display: flex !important;
+    flex-direction: row !important; /* Жестко выстраиваем карточки в строчку */
+    flex-wrap: wrap; /* Если карточки не влезут в экран, они аккуратно перенесутся на вторую строку */
+    justify-content: flex-start; /* Выравниваем карточки по левому краю, а не по центру */
+    gap: 20px; /* Красивый, ровный отступ между карточками фильмов */
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    margin-top: 30px;
+}
+/* Позиционируем выпадающий список строго под полем ввода */
+#search-results-dropdown {
+    /* 1. Жестко фиксируем на экране */
+    position: fixed !important;
+    
+    /* 2. Выставляем абсолютный, максимальный в природе z-index */
+    z-index: 999999999 !important; 
+    
+    /* 3. ЮВЕЛИРНАЯ СТЫКОВКА ПОД ТВОЙ ЭКРАН (выровнял по твоему Хрому на скриншоте): */
+    top: 285px !important;  /* Опускаем список ровно под нижнюю границу инпута */
+    left: 30.5% !important; /* Сдвигаем вправо, чтобы он встал пиксель в пиксель под полем ввода */
+    
+    background: #000000 !important; /* Глухой чёрный фон, чтобы карточки сзади не просвечивали */
+    border: 2px solid #ffffff !important;
+    width: 250px !important; /* Делаем ширину ровно по размеру твоего инпута на экране */
+    max-height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 1);
+}
+
+/* ⚠️ КРИТИЧЕСКИЙ ШАГ: Принудительно занижаем слои для контейнера с фильмами, 
+чтобы они гарантированно ушли на задний план под выпадашку */
+.container, .List, #list1, #list1 li, #list2 li, #list3 li, #list4 li {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* Строчка с фильмом внутри списка */
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-bottom: 1px dashed #ffffff;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+/* Эффект наведения мышки */
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-item img {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border: 1px solid #ffffff;
+}
+
+.movie-title {
+    font-size: 11px; /* Чуть меньше размер, так как пиксельный шрифт крупный */
+    color: #ffffff;
+    display: block;
     margin-bottom: 5px;
 }
 
-p {
-    color: #aaaaaa; /* Описание делаем мягким серым */
-    margin-bottom: 30px;
-}
-
-/* 2. Настраиваем общую обёртку для карточек */
-.container {
-    display: flex;
-    flex-direction: column; /* Карточки будут идти строго сверху вниз */
-    gap: 20px; /* Расстояние между карточками */
-    width: 600px; /* Фиксированная ширина списка, как в макете */
-}
-
-/* 3. Переносим те самые стили из Figma на правильный класс .column */
-.column {
-    display: flex;
-    flex-direction: column; /* Контент внутри карточки идёт сверху вниз */
-    align-items: flex-start;
-    gap: 12px; /* Расстояние между иконкой-заголовком, текстом и кнопкой */
-    
-    width: 100%; /* Занимает всю ширину контейнера (600px) */
-    padding: 24px; /* Внутренние отступы, чтобы текст не прилипал к краям */
-    background: rgba(255, 255, 255, 0.05); /* Красивый полупрозрачный тёмный фон карточки */
-    border-radius: 12px; /* Мягкие современные углы */
-    box-sizing: border-box; /* Чтобы отступы не ломали ширину */
-}
-
-/* Оформляем заголовки внутри карточек (h2) */
-.column h2 {
-    margin: 0;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Расстояние между иконкой и текстом */
-}
-
-/* Оформляем текст описания внутри карточек */
-.column p {
-    margin: 0;
-    font-size: 14px;
-    color: #888888;
-}
-
-/* 4. Настраиваем аккуратные оранжевые кнопки */
-.column button {
-    background-color: #ff8000; /* Оранжевый McLaren */
-    color: #1a1a1a;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out; /* Плавность для анимации */
-}
-
-/* Сочное неоновое свечение при наведении мышки! */
-.column button:hover {
-    background-color: #ff9933;
-    box-shadow: 0 0 15px #ff8000; /* Неоновый крутой шлейф */
-    transform: translateY(-1px); /* Интерактивный подскок */
-}
-.column input {
-    background-color: #380220; /* Оранжевый McLaren */
-    color: #1a1a1a;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out; /* Плавность для анимации */
-}
-.column input:hover{
-    background-color: #ff9933;
-    box-shadow: 0 0 15px #ff8000; /* Неоновый крутой шлейф */
-    transform: translateY(-1px); /* Интерактивный подскок */ 
-}
-.List ul{
-     display: flex;
-    flex-direction: column; /* Контент внутри карточки идёт сверху вниз */
-    align-items: flex-start;
-    gap: 12px; /* Расстояние между иконкой-заголовком, текстом и кнопкой */
-    
-    width: 100%; /* Занимает всю ширину контейнера (600px) */
-    padding: 24px; /* Внутренние отступы, чтобы текст не прилипал к краям */
-    background: rgba(255, 255, 255, 0.05); /* Красивый полупрозрачный тёмный фон карточки */
-    border-radius: 12px; /* Мягкие современные углы */
-    box-sizing: border-box; /* Чтобы отступы не ломали ширину */
+.movie-year {
+    font-size: 9px;
+    color: #aaaaaa;
 }
