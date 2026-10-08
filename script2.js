@@ -13,7 +13,7 @@ function Addf(num){
     }
 }
 function Return(){
-    window.location.href = "main.html"
+    window.location.href = "index.html"
 }
 let kino = [];
 
